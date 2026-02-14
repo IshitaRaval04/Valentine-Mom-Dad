@@ -3,34 +3,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
+<title>For You My Parents❤️</title>
 
 <style>
 body{
     margin:0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg,#ff9a9e,#fecfef);
     height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    text-align:center;
-    color:white;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    font-family:'Georgia',serif;
     overflow:hidden;
 }
-
-.container{
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(12px);
-    padding:40px;
-    border-radius:20px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.2);
-}
-
-h1{
-    font-size:2.5em;
-}
-
 button{
     margin-top:20px;
     padding:15px 30px;
@@ -46,24 +31,78 @@ button{
 button:hover{
     transform:scale(1.1);
 }
-
-#message{
-    margin-top:25px;
-    font-size:22px;
-    min-height:60px;
+#book{
+position:relative;
+width:420px;
+height:560px;
+perspective:2000px;
+display:none;
 }
+
+#cover{
+position:absolute;
+width:100%;
+height:100%;
+background:#8b5e3c;
+color:white;
+font-size:28px;
+display:flex;
+justify-content:center;
+align-items:center;
+transform-origin:left;
+transition:1.5s;
+z-index:5;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+
+.page, #finalPage{
+position:absolute;
+width:100%;
+height:100%;
+background:#fffdf7;
+border-radius:8px;
+transform-origin:left;
+transition:1.2s;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+.page{
+z-index:4;
+}
+
+#page2{z-index:3;}
+#page3{z-index:2;}
+
+#finalPage{
+padding:40px;
+box-sizing:border-box;
+line-height:1.8;
+overflow:auto;
+opacity:0;
+}
+
+.openCover #cover{transform:rotateY(-160deg);}
+.flip1 #page1{transform:rotateY(-180deg);}
+.flip2 #page2{transform:rotateY(-180deg);}
+.flip3 #page3{transform:rotateY(-180deg);}
+.showMessage #finalPage{opacity:1;}
+
+
+.open #flap{transform:rotateX(180deg);}
+.open #letter{transform:translateY(-160px);opacity:1;}
 
 .heart{
     position:absolute;
-    color:white;
-    animation:float 8s linear infinite;
+    color:#ff4d6d;
     font-size:20px;
+    animation:float 7s linear infinite;
 }
 
 @keyframes float{
-    0%{transform:translateY(100vh);opacity:0;}
-    20%{opacity:1;}
-    100%{transform:translateY(-10vh);opacity:0;}
+    0%{transform:translateY(100vh);opacity:0}
+    20%{opacity:1}
+    100%{transform:translateY(-10vh);opacity:0}
 }
 </style>
 
@@ -71,49 +110,177 @@ button:hover{
 
 <body>
 
-<div class="container">
-    <h1>Hi Love ❤️</h1>
-    <p>Tap the button whenever you need a reminder</p>
+<button onclick="openLetter()">Open My Heart 💌</button>
+
+<div id="book">
+    <div id="cover">My Diary</div>
 
 ```
-<button onclick="generate()">Why I Appreciate You</button>
+<div class="page" id="page1"></div>
+<div class="page" id="page2"></div>
+<div class="page" id="page3"></div>
 
-<div id="message"></div>
+<div id="finalPage">
+    <h2 id="todayDate"></h2>
+    <p id="message"></p>
+</div>
 ```
 
 </div>
+        <h2>To My Favorite People ❤️</h2>
+        <p id="message"></p>
+        <div id="proposal" style="display:none; text-align:center; margin-top:25px;">
+    <h2>Will you be my Valentine Mumma and Papa? ❤️</h2>
+    <button id="yesBtn" onclick="sayYes()">Yes 💖</button>
+    <button id="noBtn">No 🙈</button>
+    <h3 id="answer" style="margin-top:20px;"></h3>
+</div>
+
+    </div>
+</div>
 
 <script>
-const messages = [
-"You're the calm in my chaos.",
-"You make ordinary days feel special.",
-"I love how safe I feel with you.",
-"You listen to me even when I ramble.",
-"You remember little things about me.",
-"Life feels lighter with you in it.",
-"You make me laugh when I don’t want to smile.",
-"I admire how kind you are to people.",
-"You’re my favorite notification.",
-"Home feels like wherever you are.",
-"I trust you more than anyone.",
-"You make me feel chosen every day."
-];
 
-function generate(){
-    const random = messages[Math.floor(Math.random()*messages.length)];
-    document.getElementById("message").innerText = random;
+const nickname = "Mumma & Papa"; // <-- CHANGE THIS TO HIS NICKNAME
+
+const longMessage = `
+Happy Valentine’s Day to the two souls who gave my life its very first meaning 🤍
+
+Before I ever understood what love was, I lived inside it.
+It was in the way you watched over me while I slept,
+in the way your hands worked tirelessly so mine could stay soft,
+in the way your worries were always about my happiness and never your own.
+
+You never loved me loudly, but you loved me endlessly —
+through quiet sacrifices I only understand now,
+through dreams you set aside so mine could grow,
+through prayers whispered when I didn’t even know I needed them.
+
+Every strength people see in me is actually yours.
+My courage is your faith in me.
+My kindness is your gentleness reflected back into the world.
+Even the way I love others is just me repeating what you taught me without words.
+
+There were days I was difficult, impatient, or distant,
+yet your love never changed its direction.
+It stayed steady, patient, and forgiving — like a light that never once asked if I deserved it.
+
+People celebrate love today,
+but I was lucky enough to be raised by it every single day of my life.
+Home was never a place… it was always the two of you.
+
+No matter how far I go, how old I grow, or how much life changes,
+a part of me will always remain your child —
+safe in your prayers, protected in your hopes, and carried in your hearts.
+
+If I ever become even half the person you are,
+I will know I did something right in this life.
+
+Thank you for loving me in the purest way love can exist —
+without conditions, without expectations, without end.
+
+I love you more than words, time, or distance could ever measure. 💕
+your daughters,
+❤️
+`;
+    :::writing{variant="standard" id="10015"}}
+function openLetter(){
+document.querySelector("button").style.display="none";
+const book=document.getElementById("book");
+book.style.display="block";
+
+// open cover
+setTimeout(()=>book.classList.add("openCover"),500);
+
+// flip pages
+setTimeout(()=>book.classList.add("flip1"),1700);
+setTimeout(()=>book.classList.add("flip2"),2600);
+setTimeout(()=>book.classList.add("flip3"),3500);
+
+// show message
+setTimeout(()=>{
+    book.classList.add("showMessage");
+    document.getElementById("message").innerText=longMessage;
+    setTodayDate();
+},4300);
+
+setInterval(createHeart,250);
+}
+:::
+:::writing{variant="standard" id="10016"}}
+function setTodayDate(){
+const d=new Date();
+const options={day:'numeric',month:'long',year:'numeric'};
+document.getElementById("todayDate").innerText=
+"Dear Diary — " + d.toLocaleDateString('en-US',options);
+}
+:::
+function createHeart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerText="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=(Math.random()*25+15)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+}
+function sayYes(){
+    document.getElementById("answer").innerText =
+    "Hehe 💖 I knew it!! Now you're officially my Valentine 😌 Happy Valentine’s Day Mumma Papa ❤️";
 }
 
-function hearts(){
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerText="❤️";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(Math.random()*20+15)+"px";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),8000);
+const noBtn = document.getElementById("noBtn");
+const envelope = document.getElementById("envelope");
+
+let attempts = 0;
+
+// when cursor tries to touch the button
+noBtn.addEventListener("mouseenter", escapeNo);
+noBtn.addEventListener("click", escapeNo);
+
+function escapeNo(){
+
+    attempts++;
+
+    // change text while escaping
+    if(attempts < 5){
+        noBtn.innerText = "Are you sure? 😶";
+    }
+
+    // after 5 tries it becomes YES
+    if(attempts >= 5){
+        noBtn.innerText = "Okay Yes ❤️";
+        noBtn.onclick = sayYes;
+        return;
+    }
+
+    // shrink slightly each time
+    const scale = Math.max(0.55, 1 - attempts*0.08);
+    noBtn.style.transform = `scale(${scale})`;
+
+    moveOutsideLetter();
 }
-setInterval(hearts,300);
+
+function moveOutsideLetter(){
+
+    const envRect = envelope.getBoundingClientRect();
+    const btnW = noBtn.offsetWidth;
+    const btnH = noBtn.offsetHeight;
+
+    // allowed area = below the letter only
+    const minY = envRect.bottom + 10;
+    const maxY = window.innerHeight - btnH - 10;
+
+    const minX = 10;
+    const maxX = window.innerWidth - btnW - 10;
+
+    const newX = minX + Math.random()*(maxX-minX);
+    const newY = minY + Math.random()*(maxY-minY);
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = newX + "px";
+    noBtn.style.top = newY + "px";
+}
 </script>
 
 </body>
